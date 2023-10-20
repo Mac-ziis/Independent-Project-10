@@ -13,6 +13,6 @@ namespace Factory.Models
 
     public int EngineerId { get; set; }
     public Engineer Engineer { get; set; }
-    public List<EngineerMachine> JoinEntities { get;}
+    public List<EngineerMachine> JoinEntities { get; }
   }
 }
