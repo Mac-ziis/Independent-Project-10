@@ -34,15 +34,15 @@ namespace Factory.Controllers
       return RedirectToAction("Index");
     }
 
-    // public ActionResult Details(int id)
-    // {
-    //   Category thisCategory = _db.Categories
-    //                             .Include(cat => cat.Items)
-    //                             .ThenInclude(item => item.JoinEntities)
-    //                             .ThenInclude(join => join.Tag)
-    //                             .FirstOrDefault(category => category.CategoryId == id);
-    //   return View(thisCategory);
-    // }
+    public ActionResult Details(int id)
+    {
+      Engineer thisEngineer = _db.Engineers
+                                .ThenInclude(machine => machine.JoinEntities)
+                                //this may need to be changed
+                                .ThenInclude(join => join.Machine)
+                                .FirstOrDefault(engineer => engineer.EngineerId == id);
+      return View(thisEngineer);
+    }
 
     public ActionResult Edit(int id)
     {
@@ -64,43 +64,43 @@ namespace Factory.Controllers
       return View(thisEngineer);
     }
 
-    // [HttpPost, ActionName("Delete")]
-    // public ActionResult DeleteConfirmed(int id)
-    // {
-    //   Category thisCategory = _db.Categories.FirstOrDefault(category => category.CategoryId == id);
-    //   _db.Categories.Remove(thisCategory);
-    //   _db.SaveChanges();
-    //   return RedirectToAction("Index");
-    // }
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineer => engineer.EngineerId == id);
+      _db.Engineers.Remove(thisEngineer);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
 
-    public ActionResult AddTag(int id)
-    // {
-    //   Item thisItem = _db.Items.FirstOrDefault(items => items.ItemId == id);
-    //   ViewBag.TagId = new SelectList(_db.Tags, "TagId", "Title");
-    //   return View(thisItem);
-    // }
+    public ActionResult AddMachine(int id)
+    {
+      Engineer thisEngineer = _db.Engineers.FirstOrDefault(engineers => engineers.EngineerId == id);
+      ViewBag.MachineId = new SelectList(_db.Machines, "MachineId", "Title");
+      return View(thisEngineer);
+    }
 
-    // [HttpPost]
-    // public ActionResult AddTag(Item item, int tagId)
-    // {
-    //   #nullable enable
-    //   ItemTag? joinEntity = _db.ItemTags.FirstOrDefault(join => (join.TagId == tagId && join.ItemId == item.ItemId));
-    //   #nullable disable
-    //   if (joinEntity == null && tagId != 0)
-    //   {
-    //     _db.ItemTags.Add(new ItemTag() { TagId = tagId, ItemId = item.ItemId });
-    //     _db.SaveChanges();
-    //   }
-    //   return RedirectToAction("Details", new { id = item.ItemId });
-    // }   
+    [HttpPost]
+    public ActionResult AddMachine(Engineer engineer, int machineId)
+    {
+      #nullable enable
+      EngineerMachine? joinEntity = _db.EngineerMachines.FirstOrDefault(join => (join.MachineId == machineId && join.EngineerId == engineer.EngineerId));
+      #nullable disable
+      if (joinEntity == null && machineId != 0)
+      {
+        _db.EngineerMachines.Add(new EngineerMachine() { MachineId = machineId, EngineerId = engineer.EngineerId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = engineer.EngineerId });
+    }   
 
-    // [HttpPost]
-    // public ActionResult DeleteJoin(int joinId)
-    // {
-    //   ItemTag joinEntry = _db.ItemTags.FirstOrDefault(entry => entry.ItemTagId == joinId);
-    //   _db.ItemTags.Remove(joinEntry);
-    //   _db.SaveChanges();
-    //   return RedirectToAction("Index");
-    // } 
+    [HttpPost]
+    public ActionResult DeleteJoin(int joinId)
+    {
+      EngineerMachine joinEntry = _db.Engineermachines.FirstOrDefault(entry => entry.EngineerMachineId == joinId);
+      _db.EngineerMachines.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    } 
   }
 }
