@@ -16,45 +16,72 @@ namespace Factory.Controllers
       _db = db;
     }
 
+    // public ActionResult Index()
+    // {
+    //   List<Machine> model = _db.Machines
+    //                         .Include(machine => machine.Engineer)
+    //                         .ToList();
+    //   return View(model);
+    // }
+
+    // public ActionResult Create()
+    // {
+    //   ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
+    //   return View();
+    // }
+
+    // [HttpPost]
+    // public ActionResult Create(Machine machine)
+    // {
+    //   if (!ModelState.IsValid)
+    //   {
+    //     ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
+    //     return View(machine);
+    //   }
+    //   else
+    //   {
+    //     _db.Machines.Add(machine);
+    //     _db.SaveChanges();
+    //     return RedirectToAction("Index");
+    //   }
+    // }
     public ActionResult Index()
     {
-      List<Machine> model = _db.Machines
-                            .Include(machine => machine.Engineer)
-                            .ToList();
-      return View(model);
+      return View(_db.Machines.ToList());
+    }
+
+    public ActionResult Details(int id)
+    {
+      Machine thisMachine = _db.Machines
+          .Include(machine => machine.JoinEntities)
+          .ThenInclude(join => join.Engineer)
+          .FirstOrDefault(machine => machine.MachineId == id);
+      return View(thisMachine);
     }
 
     public ActionResult Create()
     {
-      ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
       return View();
     }
 
     [HttpPost]
     public ActionResult Create(Machine machine)
     {
-      if (!ModelState.IsValid)
-      {
-        ViewBag.EngineerId = new SelectList(_db.Engineers, "EngineerId", "Name");
-        return View(machine);
-      }
-      else
-      {
-        _db.Machines.Add(machine);
-        _db.SaveChanges();
-        return RedirectToAction("Index");
-      }
+      _db.Machines.Add(machine);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
 
-    public ActionResult Details(int id)
-    {
-      Machine thisMachine = _db.Machines
-          .Include(machine => machine.Engineer)
-          .Include(machine => machine.JoinEntities)
-          .ThenInclude(join => join.Machine)
-          .FirstOrDefault(machine => machine.MachineId == id);
-      return View(thisMachine);
-    }
+
+    // public ActionResult Details(int id)
+    // {
+    //   Machine thisMachine = _db.Machines
+    //       .Include(machine => machine.Engineer)
+    //       .Include(machine => machine.JoinEntities)
+    //       .ThenInclude(join => join.Machine)
+    //       .FirstOrDefault(machine => machine.MachineId == id);
+    //   return View(thisMachine);
+    // }
 
     public ActionResult Edit(int id)
     {

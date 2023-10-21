@@ -16,7 +16,12 @@ namespace Factory.Controllers
       _db = db;
     }
 
-    public ActionResult Index()
+    // public ActionResult Index()
+    // {
+    //   List<Engineer> model = _db.Engineers.ToList();
+    //   return View(model);
+    // }
+     public ActionResult Index()
     {
       List<Engineer> model = _db.Engineers.ToList();
       return View(model);
@@ -27,14 +32,33 @@ namespace Factory.Controllers
       return View();
     }
 
+    // public ActionResult Create()
+    // {
+    //   return View();
+    // }
     [HttpPost]
     public ActionResult Create(Engineer engineer)
     {
-      _db.Engineers.Add(engineer);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if (!ModelState.IsValid)
+      {
+        return View(engineer);
+      }
+      else
+      {
+        _db.Engineers.Add(engineer);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
     }
 
+    // [HttpPost]
+    // public ActionResult Create(Engineer engineer)
+    // {
+    //   _db.Engineers.Add(engineer);
+    //   _db.SaveChanges();
+    //   return RedirectToAction("Index");
+    // }
+    
     public ActionResult Details(int id)
     {
       Engineer thisEngineer = _db.Engineers
