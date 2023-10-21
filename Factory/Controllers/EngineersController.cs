@@ -16,11 +16,6 @@ namespace Factory.Controllers
       _db = db;
     }
 
-    // public ActionResult Index()
-    // {
-    //   List<Engineer> model = _db.Engineers.ToList();
-    //   return View(model);
-    // }
      public ActionResult Index()
     {
       List<Engineer> model = _db.Engineers.ToList();
@@ -32,10 +27,6 @@ namespace Factory.Controllers
       return View();
     }
 
-    // public ActionResult Create()
-    // {
-    //   return View();
-    // }
     [HttpPost]
     public ActionResult Create(Engineer engineer)
     {
@@ -50,14 +41,6 @@ namespace Factory.Controllers
         return RedirectToAction("Index");
       }
     }
-
-    // [HttpPost]
-    // public ActionResult Create(Engineer engineer)
-    // {
-    //   _db.Engineers.Add(engineer);
-    //   _db.SaveChanges();
-    //   return RedirectToAction("Index");
-    // }
     
     public ActionResult Details(int id)
     {
@@ -118,14 +101,5 @@ namespace Factory.Controllers
       }
       return RedirectToAction("Details", new { id = engineer.EngineerId });
     }   
-
-    // [HttpPost]
-    // public ActionResult DeleteJoin(int joinId)
-    // {
-    //   EngineerMachine joinEntry = _db.Engineermachines.FirstOrDefault(entry => entry.EngineerMachineId == joinId);
-    //   _db.EngineerMachines.Remove(joinEntry);
-    //   _db.SaveChanges();
-    //   return RedirectToAction("Index");
-    // } 
   }
 }

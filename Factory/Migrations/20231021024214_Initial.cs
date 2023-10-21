@@ -38,18 +38,11 @@ namespace Factory.Migrations
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    EngineerId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Machines", x => x.MachineId);
-                    table.ForeignKey(
-                        name: "FK_Machines_Engineers_EngineerId",
-                        column: x => x.EngineerId,
-                        principalTable: "Engineers",
-                        principalColumn: "EngineerId",
-                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -89,11 +82,6 @@ namespace Factory.Migrations
                 name: "IX_EngineerMachines_MachineId",
                 table: "EngineerMachines",
                 column: "MachineId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Machines_EngineerId",
-                table: "Machines",
-                column: "EngineerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -102,10 +90,10 @@ namespace Factory.Migrations
                 name: "EngineerMachines");
 
             migrationBuilder.DropTable(
-                name: "Machines");
+                name: "Engineers");
 
             migrationBuilder.DropTable(
-                name: "Engineers");
+                name: "Machines");
         }
     }
 }
