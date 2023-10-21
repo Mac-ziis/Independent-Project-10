@@ -32,7 +32,7 @@ _This is an MVC web application that utilizes many to many database relationship
           "DefaultConnection": "Server=localhost;Port=3306;database=[DATABASE-NAME];uid=[YOUR-USERNAME];pwd=[YOUR-MYSQL-PASSWORD];"
       }
     }
-    ```
+```
 * _Run `$ dotnet ef database update`. This command will create the database and required tables on your local machine._
 * _Run `$ dotnet watch run` in the command line to start the project in development mode with a watcher._
 * _Open the browser at: _https://localhost:5001_. If you cannot access localhost:5001 it is likely because you have not configured a .NET developer security certificate for HTTPS. To learn about this, review this lesson: [Redirecting to HTTPS and Issuing a Security Certificate](https://www.learnhowtoprogram.com/c-and-net/basic-web-applications/redirecting-to-https-and-issuing-a-security-certificate)._
